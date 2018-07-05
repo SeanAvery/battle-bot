@@ -3,8 +3,9 @@ import numpy as np
 import scipy.misc
 
 class Game():
-    def __init__(self):
+    def __init__(self, model):
         self.env = gym.make('BattleZone-ram-v0')
+        self.model = model
 
     def choose_action(self):
         return self.env.action_space.sample()
@@ -25,13 +26,15 @@ class Game():
             self.run_round()
 
     def run_round(self):
-        old_state = self.env.reset()
-        print('old_state', old_state.shape)
+        self.old_state = self.env.reset()
 
         while True:
             action = self.choose_action()
             new_state, reward, done, _ = self.env.step(action)
-            # self.env.render()
-            self.process_frame(new_state)
+            self.model.memory.append(
+                (self.old_state, action, reward, new_state, reward))
+
+            # self.model.update_model()
+
             if done:
                 break

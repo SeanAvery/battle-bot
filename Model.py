@@ -4,8 +4,9 @@ from keras.layers import Dense
 from keras.optimizers import Adam
 
 class Model():
-    def __init__(self, hyperparams):
+    def __init__(self, hyperparams, memory):
         self.init_hyperparams(hyperparams)
+        self.memory = memory 
         self.build_model()
 
     def init_hyperparams(self,params):

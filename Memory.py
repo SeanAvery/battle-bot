@@ -7,8 +7,10 @@ class Memory():
         self.max_size = max_size
 
     def append(self, item):
-        if len(self.memories) > self.max_size:
+        if len(self.memories) > self.max_size - 1:
             self.memories.popleft()
-            self.memories.append()
+            self.memories.append(item)
         else:
             self.memories.append(item)
+
+        print('length of memeories', len(self.memories))
